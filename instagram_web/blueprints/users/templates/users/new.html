@@ -7,6 +7,7 @@
 <h1>New User</h1>
 <form action="{{url_for('users.create')}}" method="POST">
     <div class="form-group">
+        
         <label for="user_name">Name:</label>
         <input class="input" type="text" name="user_name" class="form-control">
         <label for="user_username">Username:</label>
@@ -20,4 +21,6 @@
     </div>
     
 </form>
+
+{{errors}}
 {% endblock %}
