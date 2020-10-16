@@ -1,1 +1,23 @@
-<h1>Users#new</h1>
+{%extends "_layout.html" %}
+
+{% block header %}
+{% endblock %}
+{% block title %}NEXTAGRAM{% endblock %}
+{% block content %}
+<h1>New User</h1>
+<form action="{{url_for('users.create')}}" method="POST">
+    <div class="form-group">
+        <label for="user_name">Name:</label>
+        <input class="input" type="text" name="user_name" class="form-control">
+        <label for="user_username">Username:</label>
+        <input class="input" type="text" name="user_username" class="form-control">
+        <label for="user_email">Email:</label>
+        <input class="input" type="text" name="user_email" class="form-control">
+        <label for="user_password">Password:</label>
+        <input class="input" type="text" name="user_password" class="form-control">
+        <button type="submit" class="btn btn-primary">Add User</button>
+
+    </div>
+    
+</form>
+{% endblock %}
