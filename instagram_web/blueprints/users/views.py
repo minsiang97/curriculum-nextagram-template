@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, flash, request, redirect, url_for
 from models.user import User
+from werkzeug.security import generate_password_hash
 
 
 users_blueprint = Blueprint('users',
@@ -18,11 +19,14 @@ def create():
     username = request.form.get('user_username')
     email = request.form.get('user_email')
     password = request.form.get('user_password')
-    user = User(name=name, username = username, email = email, password = password)
+    hashed_password = generate_password_hash(password)
+    user = User(name=name, username = username, email = email, password = hashed_password)
     if user.save():
+        
         flash("User created","success")
     else :
-        flash("Email already exist, try with another email","danger")
+        flash("Email or username already exist, please try again with a different email or username", "danger")
+    
     return redirect(url_for('users.new'))
 
 
@@ -33,6 +37,7 @@ def show(username):
 
 @users_blueprint.route('/', methods=["GET"])
 def index():
+
     return "USERS"
 
 
