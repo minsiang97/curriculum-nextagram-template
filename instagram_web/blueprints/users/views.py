@@ -24,9 +24,8 @@ def create():
     if user.save():
         session["user_id"] = user.id
         login_user(user)
-        signed_in = True
         flash("Successfully Logged In!","success")
-        return render_template('home.html',signed_in=signed_in)
+        return redirect(url_for('home'))
     else :
         flash(user.errors,"danger")
     return redirect(url_for('users.new'))
@@ -35,10 +34,9 @@ def create():
 
 
 @users_blueprint.route('/<username>', methods=["GET"])
-@login_required
 def show(username):
-    username = User.get(User.username == username)
-    return render_template('users/show.html',name=current_user.name)
+    user = User.get(User.username == username)
+    return render_template('users/show.html',name=user.name)
 
 
 

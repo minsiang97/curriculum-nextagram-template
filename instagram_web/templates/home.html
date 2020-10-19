@@ -9,4 +9,7 @@
 
 {% block content %}
   <h1>Homepage</h1>
+  {% if current_user.is_authenticated %}
+  <h2>Current User = {{current_user.username}}</h2>
+  {% endif %}
 {% endblock %}

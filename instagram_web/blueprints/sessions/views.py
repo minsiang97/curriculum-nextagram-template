@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, flash, request, redirect, url_for, session
 from models.user import User
 from werkzeug.security import check_password_hash
-from flask_login import login_user
+from flask_login import login_user, logout_user
 
 
 
@@ -24,12 +24,11 @@ def create():
     result = check_password_hash(hashed_password, password_to_check)
     
     
-    if result == True:
+    if result:
         session["user_id"] = user.id
         login_user(user)
-        signed_in = True
         flash("Successfully Logged In!","success")
-        return render_template('home.html',signed_in=signed_in)
+        return redirect(url_for('home'))
         
     else :
         flash("Email or password is incorrect","danger")
@@ -37,7 +36,7 @@ def create():
     
 @sessions_blueprint.route("/logout")
 def logout():
-    session.pop('user_id', None)
+    logout_user()
     flash("Successfully Logged Out!", "success")
     return redirect(url_for('home'))
     
