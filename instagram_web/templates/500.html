@@ -2,10 +2,18 @@
 {% extends "_layout.html" %}
 {% block title %}500 Internal Server Error{% endblock %}
 {% block content %}
-<h1>500 Internal Server Error</h1>
-<p>Oops, Something went wrong.</p>
-<p>The server encountered an internal error and misconfiguration and was unable to complete your request.</p>
-<p>Please go back and try again.</p>
+<div class="container-fluid error1">
+    <div class="container-fluid d-flex justify-content-center">
+        <h1 class="error2">500 Internal Server Error</h1>
+        <img class="error-image" src="../static/internal-server-error1.jpg" alt="">
+    </div>
+
+    <p class="text-center words">Oops, Something went wrong.</p>
+    <p class="text-center words">The server encountered an internal error and misconfiguration and was unable to complete your request.</p>
+    <p class="text-center words">Please go back and try again.</p>
+</div>
+
+
 {% endblock %}
 
 

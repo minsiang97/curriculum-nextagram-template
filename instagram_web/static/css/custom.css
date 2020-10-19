@@ -35,7 +35,12 @@ footer a {
 }
 
 .error1{
-  padding-top: 15%;
+  padding-top: 12%;
+}
+
+.error2{
+  font-size: 500%;
+  padding-top: 25px;
 }
 
 .words {

@@ -1,5 +1,5 @@
 from app import app
-from flask import Flask, render_template
+from flask import Flask, render_template, abort
 from instagram_web.blueprints.users.views import users_blueprint
 from instagram_web.blueprints.sessions.views import sessions_blueprint
 from flask_assets import Environment, Bundle
