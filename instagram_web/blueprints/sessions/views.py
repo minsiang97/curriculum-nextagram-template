@@ -27,12 +27,19 @@ def create():
     if result == True:
         session["user_id"] = user.id
         login_user(user)
-        flash("You have successfully log in!", "success")
+        signed_in = True
+        flash("Successfully Logged In!","success")
+        return render_template('home.html',signed_in=signed_in)
         
     else :
         flash("Email or password is incorrect","danger")
     return redirect(url_for('sessions.new'))
     
-
+@sessions_blueprint.route("/logout")
+def logout():
+    session.pop('user_id', None)
+    flash("Successfully Logged Out!", "success")
+    return redirect(url_for('home'))
+    
 
 

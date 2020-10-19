@@ -46,11 +46,13 @@
   
             <a class="nav-link" href="/users/">Users</a>
   
-            
-              <a class="nav-link" href="/sessions/new">Sign In</a>
-              <a class="nav-link" href="/users/new">Sign Up</a>
-            
-  
+            {% if not signed_in %}
+            <a class="nav-link" href="/sessions/new">Sign In</a>
+            <a class="nav-link" href="/users/new">Sign Up</a>
+            {% endif %}
+            {% if signed_in %}
+            <a class="nav-link" href="/sessions/logout">Log Out</a>
+            {% endif %}
             
           </div>
         </nav>

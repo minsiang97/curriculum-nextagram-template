@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, flash, request, redirect, url_for
+from flask import Blueprint, render_template, flash, request, redirect, url_for, session
 from models.user import User
-from flask_login import login_required, current_user
+from flask_login import login_required, current_user, login_user
 
 
 
@@ -22,8 +22,11 @@ def create():
     password = request.form.get('user_password')
     user = User(name=name, username = username, email = email, password = password)
     if user.save():
-        
-        return redirect(url_for('users.index'))
+        session["user_id"] = user.id
+        login_user(user)
+        signed_in = True
+        flash("Successfully Logged In!","success")
+        return render_template('home.html',signed_in=signed_in)
     else :
         flash(user.errors,"danger")
     return redirect(url_for('users.new'))

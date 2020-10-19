@@ -22,7 +22,6 @@ else:
     app.config.from_object("config.DevelopmentConfig")
 
 
-
 @login_manager.user_loader
 def load_user(user_id):
     print(user_id)
