@@ -39,7 +39,21 @@ class User(BaseModel):
             self.errors.append("Password must be present")
 
 
+    def is_active(self):
+        
+        return True
 
+    def get_id(self):
+        
+        return self.id
+
+    def is_authenticated(self):
+        
+        return self.authenticated
+
+    def is_anonymous(self):
+        
+        return False
     
     
         

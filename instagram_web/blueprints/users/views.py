@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, flash, request, redirect, url_for
 from models.user import User
+from flask_login import login_required, current_user
 
 
 
@@ -31,8 +32,11 @@ def create():
 
 
 @users_blueprint.route('/<username>', methods=["GET"])
+@login_required
 def show(username):
-    pass
+    username = User.get(User.username == username)
+    return render_template('users/show.html',name=current_user.name)
+
 
 
 @users_blueprint.route('/', methods=["GET"])
