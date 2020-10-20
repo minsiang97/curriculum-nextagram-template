@@ -1,20 +1,19 @@
 import boto3, botocore
-from config import ProductionConfig
+from app import app
 
 s3 = boto3.client(
    "s3",
-   aws_access_key_id=ProductionConfig.S3_KEY,
-   aws_secret_access_key=ProductionConfig.S3_SECRET
+   aws_access_key_id=app.config.get("S3_KEY"),
+   aws_secret_access_key=app.config.get("S3_SECRET")
 )
 
 
-def upload_file_to_s3(file, bucket_name, acl="public-read"):
+def upload_file_to_s3(file, acl="public-read"):
 
-    try:
-
+    try:    
         s3.upload_fileobj(
             file,
-            bucket_name,
+            app.config.get("S3_BUCKET"),
             file.filename,
             ExtraArgs={
                 "ACL": acl,
@@ -27,4 +26,4 @@ def upload_file_to_s3(file, bucket_name, acl="public-read"):
         print("Something Happened: ", e)
         return e
 
-    return "{}{}".format(ProductionConfig.S3_LOCATION, file.filename)
+    return file.filename

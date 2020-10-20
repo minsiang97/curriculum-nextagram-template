@@ -2,27 +2,29 @@ from models.base_model import BaseModel
 import peewee as pw
 import re
 from werkzeug.security import generate_password_hash
-from sqlalchemy.ext.hybrid import hybrid_property
-from config import ProductionConfig
+from playhouse.hybrid import hybrid_property
+from flask_login import UserMixin
 
 
-class User(BaseModel):
+class User(BaseModel,UserMixin):
     name = pw.CharField(unique=False)
     username = pw.CharField(unique=True, null=True)
     email = pw.CharField(unique=True)
     password_hash = pw.CharField(unique=False)
-    image_path = pw.CharField(unique=True, null=True)
+    image_path = pw.CharField(null = True)
     password = None
 
+    
+    
 
     def validate(self):
         duplicate_user_email = User.get_or_none(User.email == self.email)
         duplicate_user_username = User.get_or_none(User.username == self.username)
 
-        if duplicate_user_email:
+        if duplicate_user_email and self.id != duplicate_user_email.id:
             self.errors.append('Email already exist')
         
-        if duplicate_user_username:
+        if duplicate_user_username and self.id != duplicate_user_username.id:
             self.errors.append('Username already exist')
 
         if self.password:
@@ -38,7 +40,7 @@ class User(BaseModel):
             if len(self.errors)==0:
                 self.password_hash = generate_password_hash(self.password)
         
-        if not self.password:
+        if not self.password_hash:
             self.errors.append("Password must be present")
 
 
@@ -58,12 +60,12 @@ class User(BaseModel):
         
         return False
     
-    @hybrid_property
-    def profile_image_url(self):
-        return ProductionConfig.AWS_S3_DOMAIN + self.image_path
     
         
-        
+    @hybrid_property
+    def profile_image_url(self):
+        from app import app
+        return app.config.get("AWS_S3_DOMAIN") + self.image_path
         
   
 

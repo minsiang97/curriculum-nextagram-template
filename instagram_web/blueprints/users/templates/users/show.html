@@ -6,7 +6,8 @@
 {% block content %}
 <a href="{{url_for('users.edit', id = current_user.id)}}">Edit</a>
 <h1>Welcome, {{name}}!!</h1>
-
+<h3>Username : {{user.username}}</h3>
+<img src="{{user.profile_image_url}}" style="width: 400px; height: 400px;"/>
 	
 
 
