@@ -1,0 +1,29 @@
+{% extends "_layout.html" %}
+
+
+{% block title %}
+Edit User | Nextagram
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<h1>Edit User</h1>
+<h2>Username : {{current_user.username}}</h2>
+<form action="{{url_for('users.update', id = current_user.id)}}" method="POST">
+    <div class="form-group">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <label for="user_username">Username:</label>
+        <input class="input" type="text" name="user_username" class="form-control">
+        <label for="user_email">Email:</label>
+        <input class="input" type="text" name="user_email" class="form-control">
+        <label for="user_password">Password:</label>
+        <input class="input" type="text" name="user_password" class="form-control">
+        <button type="submit" class="btn btn-primary">Update User</button>
+
+    </div>
+    
+</form>
+
+{% endblock %}

@@ -48,9 +48,29 @@ def index():
 
 @users_blueprint.route('/<id>/edit', methods=['GET'])
 def edit(id):
-    pass
+    user = User.get_by_id(id)
+    if current_user == user:
+        return render_template('users/edit.html')
+    else :
+        return redirect(url_for('users.show', username = user.username))
+
 
 
 @users_blueprint.route('/<id>', methods=['POST'])
 def update(id):
-    pass
+    user = User.get_by_id(id)
+    user.username = request.form.get('user_username')
+    user.email = request.form.get('user_email')
+    user.password = request.form.get('user_password')
+
+    
+    if user.save() :
+        flash("Successfully Updated","success")
+        return redirect(url_for('users.show',username = current_user.username))
+    else :
+        flash("Update failed, try again.","danger")
+    return redirect(url_for('users.edit',id = current_user.id))
+    
+  
+
+    

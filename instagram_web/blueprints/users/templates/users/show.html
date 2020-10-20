@@ -4,8 +4,9 @@
 {% endblock %}
 {% block title %}Sign In | Nextagram{% endblock %}
 {% block content %}
-
+<a href="{{url_for('users.edit', id = current_user.id)}}">Edit</a>
 <h1>Welcome, {{name}}!!</h1>
+
 
 
 {% endblock %}
