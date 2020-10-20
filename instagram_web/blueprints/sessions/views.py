@@ -18,21 +18,26 @@ def new():
 @sessions_blueprint.route('/', methods=['POST'])
 def create():
     email = request.form.get('user_email')
-    user = User.get(User.email == email)
+    user = User.get_or_none(User.email == email)
     password_to_check = request.form['user_password']
-    hashed_password = user.password_hash
-    result = check_password_hash(hashed_password, password_to_check)
     
-    
-    if result:
-        session["user_id"] = user.id
-        login_user(user)
-        flash("Successfully Logged In!","success")
-        return redirect(url_for('home'))
+    if user :
+        hashed_password = user.password_hash
+        result = check_password_hash(hashed_password, password_to_check)
+        if result:
+            session["user_id"] = user.id
+            login_user(user)
+            flash("Successfully Logged In!","success")
+            return redirect(url_for('home'))
         
+        else:
+            flash("Password is incorrect","danger")
+            return redirect(url_for('sessions.new'))
+    
     else :
-        flash("Email or password is incorrect","danger")
-    return redirect(url_for('sessions.new'))
+        flash("Email does not exist","danger")
+        return redirect(url_for('sessions.new'))
+    
     
 @sessions_blueprint.route("/logout")
 def logout():

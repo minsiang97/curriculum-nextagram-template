@@ -2,6 +2,8 @@ from models.base_model import BaseModel
 import peewee as pw
 import re
 from werkzeug.security import generate_password_hash
+from sqlalchemy.ext.hybrid import hybrid_property
+from config import ProductionConfig
 
 
 class User(BaseModel):
@@ -9,6 +11,7 @@ class User(BaseModel):
     username = pw.CharField(unique=True, null=True)
     email = pw.CharField(unique=True)
     password_hash = pw.CharField(unique=False)
+    image_path = pw.CharField(unique=True, null=True)
     password = None
 
 
@@ -55,6 +58,9 @@ class User(BaseModel):
         
         return False
     
+    @hybrid_property
+    def profile_image_url(self):
+        return ProductionConfig.AWS_S3_DOMAIN + self.image_path
     
         
         

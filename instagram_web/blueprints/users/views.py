@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, flash, request, redirect, url_for, session
 from models.user import User
 from flask_login import login_required, current_user, login_user
+from helpers import *
+from config import ProductionConfig
 
 
 
@@ -62,7 +64,6 @@ def update(id):
     user.username = request.form.get('user_username')
     user.email = request.form.get('user_email')
     user.password = request.form.get('user_password')
-
     
     if user.save() :
         flash("Successfully Updated","success")
@@ -70,7 +71,27 @@ def update(id):
     else :
         flash("Update failed, try again.","danger")
     return redirect(url_for('users.edit',id = current_user.id))
+
+
+@users_blueprint.route('/<id>', methods=['POST'])
+def upload_image(id) :
+    user = User.get_by_id(id)
+    if "user_file" not in request.files:
+        return "No user_file key in request.files"
+    
+    file    = request.files["user_file"]
+
+    if file.filename == "":
+        return "Please select a file"
+
+    if file :
+        output = upload_file_to_s3(file, ProductionConfig.S3_BUCKET)
+        str(output)
+        return redirect(url_for("users.show", username =current_user.username))
+        
+
+    else:
+        return redirect(url_for("users.show", username =current_user.username))
     
   
 
-    
