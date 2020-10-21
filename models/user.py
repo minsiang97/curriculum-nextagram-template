@@ -12,6 +12,7 @@ class User(BaseModel,UserMixin):
     email = pw.CharField(unique=True)
     password_hash = pw.CharField(unique=False)
     image_path = pw.CharField(null = True)
+    is_private = pw.BooleanField(default = False)
     password = None
 
     
@@ -65,6 +66,8 @@ class User(BaseModel,UserMixin):
     @hybrid_property
     def profile_image_url(self):
         from app import app
+        if not self.image_path :
+            return app.config.get("AWS_S3_DOMAIN") + "avatar.png"
         return app.config.get("AWS_S3_DOMAIN") + self.image_path
         
   

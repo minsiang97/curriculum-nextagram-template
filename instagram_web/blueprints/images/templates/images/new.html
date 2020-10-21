@@ -1,0 +1,20 @@
+{%extends "_layout.html" %}
+
+{% block header %}
+{% endblock %}
+{% block title %}New User | Nextagram{% endblock %}
+{% block content %}
+<h1 style="text-align: center;">Upload Images</h1>
+<div class="row d-flex justify-content-center">
+    <div class="col-3">
+        <form action="{{url_for('images.create')}}" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <br><br>
+            <input type="file" name="image_file" style="width: 20%;">
+            <br><br>
+            <button type="submit" class="btn btn-primary" style="margin-left: 60px;">Upload</button>
+        </form> 
+    </div>
+</div>
+
+{% endblock %}

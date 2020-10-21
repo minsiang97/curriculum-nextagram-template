@@ -52,3 +52,14 @@ footer a {
   height: 150px;
   margin-left: 20px;
 }
+
+.picture {
+  height: 80%;
+  width: 80%;
+}
+
+.profile-picture{
+  height: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
