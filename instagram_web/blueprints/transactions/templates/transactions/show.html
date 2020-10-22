@@ -1,0 +1,29 @@
+{% extends "_layout.html"%}
+
+
+{% block title %}Payment Status | Nextagram{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center mt-5">
+    <div>
+        <img src="/static/{{result['icon']}}.png" width = "70" height="70" alt="">
+    </div>
+    <div class="ml-3">
+        <h3>{{result['header']}}</h3>
+        <p>{{result['message']}}</p>
+    </div>
+    
+</div>
+
+<div class="text-center mt-5">
+   
+    <p>Proceed with another transaction</p>
+    <form action="{{url_for('transactions.new_checkout', image_id = image.id)}}">
+        <button type="submit" class="btn btn-primary">Back</button>
+    </form>
+    
+</div>
+{% endblock %}

@@ -1,9 +1,11 @@
 from flask import Blueprint, render_template, flash, request, redirect, url_for, session
 from models.user import User
 from models.image import Image
+from models.transaction import Transaction
 from flask_login import login_required, current_user, login_user
-from helpers import upload_file_to_s3
+from helpers import upload_file_to_s3, gateway
 from werkzeug.security import check_password_hash
+
 
 
 
@@ -40,8 +42,9 @@ def create():
 def show(username):
     user = User.get(User.username == username)
     images = Image.select(Image, User).join(User).where(Image.user_id == user.id)
-    return render_template('users/show.html',name=user.name, user = user, images = images )
-
+    return render_template('users/show.html',name=user.name, user = user, images = images)
+    
+    
 
 
 @users_blueprint.route('/', methods=["GET"])
@@ -140,9 +143,7 @@ def upload_image(id):
 @users_blueprint.route('/search', methods=["POST"])
 def search():
     user = User.select()
-    if user:
-        user.username = request.form.get("username")
-        return redirect(url_for("users.show", username = user.username))
-    else :
-        return "User does not exist!"
-
+    user.username = request.form.get("username")
+    return redirect(url_for("users.show", username = user.username))
+  
+      

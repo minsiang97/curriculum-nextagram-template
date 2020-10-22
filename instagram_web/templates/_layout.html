@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://js.braintreegateway.com/web/dropin/1.25.0/js/dropin.min.js"></script>
 
     
 
@@ -39,7 +40,7 @@
             <ul class="navbar-nav mr-auto">
             </ul>
   
-            <form class="form-inline my-2 my-lg-0" action="/users/search" method="POST">
+            <form class="form-inline my-2 my-lg-0" action="{{url_for('users.search')}}" method="POST">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
               <input class="form-control mr-sm-2" type="text" name="username" placeholder="Type username">
               <input type="submit" class="btn btn-outline-info my-2 my-sm-0" value="Search">

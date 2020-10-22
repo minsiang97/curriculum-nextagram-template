@@ -5,6 +5,7 @@ from models.base_model import db
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager
 from models.user import User
+import braintree
 
 
 web_dir = os.path.join(os.path.dirname(
@@ -21,6 +22,15 @@ if os.getenv('FLASK_ENV') == 'production':
 else:
     app.config.from_object("config.DevelopmentConfig")
 
+TRANSACTION_SUCCESS_STATUSES = [
+    braintree.Transaction.Status.Authorized,
+    braintree.Transaction.Status.Authorizing,
+    braintree.Transaction.Status.Settled,
+    braintree.Transaction.Status.SettlementConfirmed,
+    braintree.Transaction.Status.SettlementPending,
+    braintree.Transaction.Status.Settling,
+    braintree.Transaction.Status.SubmittedForSettlement
+]
 
 @login_manager.user_loader
 def load_user(user_id):

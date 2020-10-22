@@ -1,0 +1,48 @@
+{%extends "_layout.html" %}
+
+{% block header %}
+{% endblock %}
+{% block title %}Payment | Nextagram{% endblock %}
+{% block content %}
+<form id="payment-form" action="{{url_for('transactions.create_checkout', image_id = image.id)}}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <section>
+        <label for="amount">
+          <span class="input-label">Amount</span>
+          <div class="input-wrapper amount-wrapper">
+            <input id="amount" name="amount" type="tel" min="1" placeholder="Amount" value="10.00">
+          </div>
+        </label>
+
+        <div class="bt-drop-in-wrapper">
+          <div id="dropin-container"></div>
+        </div>
+    </section>
+    <input type="submit" />
+    <input type="hidden" id="nonce" name="payment_method_nonce"/>
+</form>
+
+<script type="text/javascript">
+    const form = document.getElementById('payment-form');
+
+    braintree.dropin.create({
+    authorization: "{{client_token}}",
+    container: document.getElementById('dropin-container'),
+  
+    }, (error, dropinInstance) => {
+    if (error) console.error(error);
+
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+
+    dropinInstance.requestPaymentMethod((error, payload) => {
+      if (error) console.error(error);
+
+      document.getElementById('nonce').value = payload.nonce;
+      form.submit();
+  
+    });
+  });
+});
+</script>
+{% endblock %}

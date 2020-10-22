@@ -63,3 +63,13 @@ footer a {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+.form {
+  text-align: center;
+  margin-top: 10px;
+  width: 80%;
+}
+
+.donation {
+  width: 80%;
+}

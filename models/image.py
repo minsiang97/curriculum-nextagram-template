@@ -12,3 +12,12 @@ class Image(BaseModel):
         from app import app
         
         return app.config.get("AWS_S3_DOMAIN") + self.image_url
+
+    @hybrid_property
+    def donations_sum(self):
+        results = 0
+        for d in self.donations:
+            results += d.donation_amount
+        return results
+        
+        

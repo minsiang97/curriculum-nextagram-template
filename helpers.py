@@ -1,10 +1,21 @@
 import boto3, botocore
 from app import app
+import braintree
+import os
 
 s3 = boto3.client(
    "s3",
    aws_access_key_id=app.config.get("S3_KEY"),
    aws_secret_access_key=app.config.get("S3_SECRET")
+)
+
+gateway = braintree.BraintreeGateway(
+    braintree.Configuration(
+        braintree.Environment.Sandbox,
+        merchant_id= app.config.get("BT_MERCHANT_ID"),
+        public_key=app.config.get("BT_PUBLIC_KEY"),
+        private_key=app.config.get("BT_PRIVATE_KEY")
+    )
 )
 
 
