@@ -67,4 +67,7 @@ def create_checkout(image_id):
 			        "text": "Successfully donated!"})
 
             return redirect(url_for('transactions.show_checkout', image_id = image.id, transaction_id=result.transaction.id ))
+
+    else :
+        return redirect(url_for('transactions.show_checkout', image_id = image.id, transaction_id=result.transaction.id ))    
     

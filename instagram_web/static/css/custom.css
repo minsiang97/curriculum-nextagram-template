@@ -73,3 +73,12 @@ footer a {
 .donation {
   width: 80%;
 }
+
+.profile-index-image{
+  padding: 5px;
+  height: auto;
+  width: 100%;
+  margin-top: 20px;
+  border: solid lightgray 1px;
+  background-color: white;
+}

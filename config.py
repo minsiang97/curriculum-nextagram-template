@@ -17,6 +17,9 @@ class Config(object):
     BT_PRIVATE_KEY= os.environ.get("BT_PRIVATE_KEY")
 
     MAILGUN_KEY = os.environ.get("MAILGUN_KEY")
+
+    G_CLIENT_ID = os.environ.get("G_CLIENT_ID")
+    G_CLIENT_SECRET = os.environ.get("G_CLIENT_SECRET")
     
 
 class ProductionConfig(Config):

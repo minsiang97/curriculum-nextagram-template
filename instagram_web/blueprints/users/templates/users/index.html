@@ -9,6 +9,36 @@
 
 {% block content %}
   <h1>Users</h1>
-  
+  {% for user in users %}
+  <div class="row bg-light mt-5 pt-3">
+    <div class="col-sm-2 pt-3">
+      <h5 class="text-center">{{user.username}}</h5>
+      <div>
+        <img src="{{user.profile_image_url}}" alt="" class="rounded-circle profile-index-image">
+      </div>
+      
+      <form action="{{url_for('users.show', username = user.username)}}" class="text-center">
+        <button class="btn btn-primary mt-5 mb-3 w-100" type="submit">See more</button>
+      </form>
+    </div>
+    
+    <div class="col">
+      
+      <div class="row">
+        {% for image in user.images %}
+        <div class="col-sm-4">
+          
+          <img src="{{image.new_image_url}}" alt="" class="picture">
+          
+        </div>
+        {% endfor %}  
+      </div>
+      
+
+      
+    </div>
+    
+  </div>
+  {% endfor %}
   
 {% endblock %}

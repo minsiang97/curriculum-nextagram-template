@@ -49,8 +49,8 @@ def show(username):
 
 @users_blueprint.route('/', methods=["GET"])
 def index():
-
-    return render_template("users/index.html")
+    users = User.select()
+    return render_template("users/index.html", users = users)
 
 
 @users_blueprint.route('/<id>/edit', methods=['GET'])
@@ -138,12 +138,18 @@ def upload_image(id):
     else :
         return "No such user found!"
 
+
     
     
 @users_blueprint.route('/search', methods=["POST"])
 def search():
-    user = User.select()
-    user.username = request.form.get("username")
-    return redirect(url_for("users.show", username = user.username))
+    username = request.form.get("username")
+    user = User.get_or_none(User.username == username)
+    if user :
+        return redirect(url_for("users.show", username = user.username))
+    else : 
+        flash("User does not exist!", "danger")
+        return redirect(url_for("home"))
+    
   
       

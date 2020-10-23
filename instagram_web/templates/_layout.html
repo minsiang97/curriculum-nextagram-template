@@ -46,16 +46,28 @@
               <input type="submit" class="btn btn-outline-info my-2 my-sm-0" value="Search">
             </form>
   
-            <a class="nav-link" href="/users/">Users</a>
+            <form action="{{url_for('users.index')}}">
+              <button class="btn btn-light" type="submit">Users</button>
+            </form>
             
             {% if current_user.is_authenticated %}
-            <a class="nav-link" href="{{url_for('users.show', username = current_user.username)}}">Profile</a>
-            <a class="nav-link" href="{{url_for('users.edit', id = current_user.id)}}">Edit</a>
-            <a class="nav-link" href="/sessions/logout">Log Out</a>
-            {% elif not current_user.is_authenticated %}
-            <a class="nav-link" href="/sessions/new">Sign In</a>
-            <a class="nav-link" href="/users/new">Sign Up</a>
             
+            <form action="{{url_for('users.show', username = current_user.username)}}">
+              <button class="btn btn-light" type="submit">Profile</button>
+            </form>
+            <form action="{{url_for('users.edit', id = current_user.id)}}">
+              <button class="btn btn-light" type="submit">Edit</button>
+            </form>
+            <form action="{{url_for('sessions.logout')}}">
+              <button class="btn btn-danger" type="submit">Log Out</button>
+            </form>
+            {% elif not current_user.is_authenticated %}
+            <form action="{{url_for('sessions.new')}}">
+              <button class="btn btn-light" type="submit">Sign In</button>
+            </form>
+            <form action="{{url_for('users.new')}}">
+              <button class="btn btn-light" type="submit">Sign Up</button>
+            </form>
             {% endif %}
             
           </div>
