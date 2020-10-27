@@ -9,20 +9,21 @@
 
 {% block content %}
   {% if current_user.is_authenticated %}
-    {% if current_user.image-feed %}
+    {% if current_user.image_feed %}
     {% for image in current_user.image_feed %}
     <div class="row feed bg-light">
-      <div class="col-sm-6 m-auto border border-dark bg-white user-image">
+      <div class="col-sm-5 m-auto border border-dark bg-white user-image">
         <div class="row pl-4 mt-3">
           <img src="{{image.user.profile_image_url}}" class="rounded-circle image-icon p-1" width="50" height="50" alt="">
           <p class="mt-2 ml-3"><a href="{{url_for('users.show', username = image.user.username)}}" class="font-weight-bold">{{image.user.username}}</a></p>
         </div>
         <img class="w-100 image-feed" src="{{image.new_image_url}}" alt="">
+        <p>{{image.created_at}}</p>
       </div>
     </div>
     {% endfor %}
     {% else %}
-    <div class="bg-light"> 
+    <div class="text-center text"> 
       <h2>Follow people you know to see their images and videos</h2>
     </div>
     {% endif %}
