@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, flash, request, redirect, url_for, session
 from models.user import User
 from models.image import Image
+from models.fan_idol import FanIdol
 from models.transaction import Transaction
 from flask_login import login_required, current_user, login_user
 from helpers import upload_file_to_s3, gateway
@@ -42,7 +43,8 @@ def create():
 def show(username):
     user = User.get(User.username == username)
     images = Image.select(Image, User).join(User).where(Image.user_id == user.id)
-    return render_template('users/show.html',name=user.name, user = user, images = images)
+    idol = FanIdol.get_or_none(FanIdol.idol == user.id, FanIdol.fan == current_user.id)
+    return render_template('users/show.html',name=user.name, user = user, images = images, idol = idol)
     
     
 
@@ -152,4 +154,46 @@ def search():
         return redirect(url_for("home"))
     
   
-      
+@users_blueprint.route('/<id>/follow', methods=['POST'])
+def user_follow(id):
+    user = User.get_by_id(id)
+    if current_user.follow(user):
+        if user.is_private == True:
+            flash ("Request sent successfully","success")
+            return redirect(url_for("users.show",username = user.username))
+        else :
+            flash ("Successfully followed","success")
+            return redirect(url_for("users.show",username = user.username))
+    
+    else :
+        flash ("Something went wrong. Try again.", "danger")
+        return redirect(url_for("users.show",username = user.username))
+
+
+@users_blueprint.route('/<id>/unfollow', methods=['POST'])
+def user_unfollow(id):
+    user = User.get_by_id(id)
+    idol = FanIdol.get(FanIdol.idol == user.id, FanIdol.fan == current_user.id)
+   
+    if current_user.unfollow(user):
+        if idol.is_approved:
+            flash ("Successfully unfollowed","success")
+            return redirect(url_for("users.show",username = user.username))
+        else :
+            flash ("Request cancelled","success")
+            return redirect(url_for("users.show",username = user.username))
+    
+    else :
+        flash ("Something went wrong. Try again.", "danger")
+        return redirect(url_for("users.show",username = user.username))
+
+@users_blueprint.route('/follow/requests', methods=['GET'])
+def user_request():
+    return render_template("users/requests.html")
+
+
+@users_blueprint.route('/<id>/approve', methods=['POST'])
+def approve(id):
+    user = User.get_by_id(id)
+    current_user.approve(user)
+    return redirect(url_for("users.user_request"))

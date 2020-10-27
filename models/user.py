@@ -14,7 +14,6 @@ class User(BaseModel,UserMixin):
     image_path = pw.CharField(null = True)
     is_private = pw.BooleanField(default = False)
     password = None
-
     
     
 
@@ -71,7 +70,60 @@ class User(BaseModel,UserMixin):
         return app.config.get("AWS_S3_DOMAIN") + self.image_path
         
   
+    
+    def follow(self,idol):
+        from models.fan_idol import FanIdol
+        if self.follow_status(idol) == None:
+            new_relationship = FanIdol(fan = self.id, idol = idol.id)
+            if idol.is_private == False :
+                new_relationship.is_approved = True
+            return new_relationship.save()
+        else :
+            return 0
 
-        
+    def unfollow(self,idol):
+        from models.fan_idol import FanIdol
+        return FanIdol.delete().where(FanIdol.idol ==idol.id, FanIdol.fan==self.id).execute()
 
-        
+    def follow_status(self, idol):
+        from models.fan_idol import FanIdol
+        return FanIdol.get_or_none(fan = self.id, idol = idol.id)
+    
+    @hybrid_property
+    def idols(self):
+        from models.fan_idol import FanIdol
+        idols_id = FanIdol.select(FanIdol.idol).where(FanIdol.fan == self.id, FanIdol.is_approved == True)
+        idols = User.select().where(User.id.in_(idols_id))
+        return idols
+
+    @hybrid_property
+    def fans(self):
+        from models.fan_idol import FanIdol
+        fans_id = FanIdol.select(FanIdol.fan).where(FanIdol.idol == self.id, FanIdol.is_approved == True)
+        fans = User.select().where(User.id.in_(fans_id))
+        return fans
+    
+    @hybrid_property
+    def idol_requests(self):
+        from models.fan_idol import FanIdol
+        idols_id = FanIdol.select(FanIdol.idol).where(FanIdol.fan == self.id, FanIdol.is_approved == False)
+        return User.select().where(User.id.in_(idols_id)).order_by(User.created_at.desc())
+    
+    @hybrid_property
+    def fan_requests(self):
+        from models.fan_idol import FanIdol
+        fans_id = FanIdol.select(FanIdol.fan).where(FanIdol.idol == self.id, FanIdol.is_approved == False)
+        return User.select().where(User.id.in_(fans_id)).order_by(User.created_at.desc())
+    
+    def approve(self, fan):
+        from models.fan_idol import FanIdol
+        relationship = FanIdol.get_or_none(idol=self.id, fan=fan.id)
+        relationship.is_approved = True
+        return relationship.save()
+
+    @hybrid_property
+    def image_feed(self):
+        from models.fan_idol import FanIdol
+        from models.image import Image
+        approved_idols_id = FanIdol.select(FanIdol.idol).where(FanIdol.fan == self.id, FanIdol.is_approved == True)
+        return Image.select().where(Image.user.in_(approved_idols_id)).order_by(Image.created_at.desc())       

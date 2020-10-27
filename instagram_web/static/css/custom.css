@@ -82,3 +82,23 @@ footer a {
   border: solid lightgray 1px;
   background-color: white;
 }
+
+.image-feed {
+  height: 500px;
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+
+.feed{
+  padding-top: 100px;
+  
+}
+
+.image-icon {
+  border: solid lightgray 1px;
+  background-color: white;
+}
+
+.user-image {
+  
+}

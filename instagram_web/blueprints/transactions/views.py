@@ -62,8 +62,8 @@ def create_checkout(image_id):
                 "https://api.mailgun.net/v3/sandbox81a71eab5677440880b5fcdad887e818.mailgun.org/messages",
 		        auth=("api", mailgun_api),
 		        data={"from": "Mailgun Sandbox <postmaster@sandbox81a71eab5677440880b5fcdad887e818.mailgun.org>",
-			        "to": ["Ong Min Siang", "<ongminsiang@gmail.com>"],
-			        "subject": "Hello",
+			        "to": [current_user.name, "<ongminsiang@gmail.com>"],
+			        "subject": "Hello!",
 			        "text": "Successfully donated!"})
 
             return redirect(url_for('transactions.show_checkout', image_id = image.id, transaction_id=result.transaction.id ))
