@@ -9,6 +9,7 @@
 
 {% block content %}
   {% if current_user.is_authenticated %}
+    {% if current_user.image-feed %}
     {% for image in current_user.image_feed %}
     <div class="row feed bg-light">
       <div class="col-sm-6 m-auto border border-dark bg-white user-image">
@@ -20,6 +21,11 @@
       </div>
     </div>
     {% endfor %}
+    {% else %}
+    <div class="bg-light"> 
+      <h2>Follow people you know to see their images and videos</h2>
+    </div>
+    {% endif %}
     
    
     
