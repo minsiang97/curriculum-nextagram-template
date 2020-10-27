@@ -6,6 +6,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager
 from models.user import User
 import braintree
+from flask_jwt_extended import JWTManager
 
 
 web_dir = os.path.join(os.path.dirname(
@@ -17,7 +18,7 @@ csrf = CSRFProtect(app)
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
-
+jwt = JWTManager(app)
 
 
 if os.getenv('FLASK_ENV') == 'production':
