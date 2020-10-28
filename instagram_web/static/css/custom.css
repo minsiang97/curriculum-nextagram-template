@@ -5,6 +5,10 @@ body {
   min-height: 100vh;
 }
 
+.navbar {
+  border: solid lightgray 1px;
+}
+
 footer {
   font-size: 11px;
   position: absolute;
@@ -84,18 +88,21 @@ footer a {
 }
 
 .image-feed {
-  height: 600px;
-  margin-top: 50px;
-  margin-bottom: 100px;
+  height: auto;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
 }
 
 .feed{
-  padding-top: 100px;
-  
+  padding-top: 20px;
+  margin-bottom: 50px;
+  margin-left: 10%;
 }
 
 .image-icon {
   border: solid lightgray 1px;
+  padding: 2px;
   background-color: white;
 }
 
@@ -105,4 +112,59 @@ footer a {
 
 .slogan {
   font-size: 100%;
+}
+
+.user-image {
+  border: lightgray 1px;
+}
+
+.right {
+  position: fixed;
+  left: 63%;
+  width : 25%
+}
+
+.username {
+  text-decoration: none;
+}
+
+.idol {
+  font-weight: bold;
+  color: gray;
+}
+
+.idol-list {
+  border: solid lightgray 1px;
+  background-color: white;
+  width: 100%;
+  padding-top: 10px;
+  
+}
+
+.username-story {
+  text-decoration: none;
+  font-size: 80%;
+}
+
+.story {
+  border: lightgray solid 1px;
+  background-color: white;
+  padding-left: 20px;
+  overflow-x: scroll;
+}
+
+.story-row {
+  margin-left: 10%;
+  margin-top: 20px;
+}
+
+.right-button {
+  position: absolute;
+  right: 1%;
+  top : 40%;
+  border-radius: 50%;
+  width: 4.5%;
+  background-color: white;
+  border: lightgray solid 1px;
+
 }

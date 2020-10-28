@@ -4,23 +4,27 @@
 {% endblock %}
 {% block title %}Sign In | Nextagram{% endblock %}
 {% block content %}
-<h1>Sign In</h1>
-<form action="{{url_for('sessions.create')}}" method="POST">
-    <div class="form-group">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-        <label for="user_email">Email:</label>
-        <input class="input" type="text" name="user_email" class="form-control">
-        <label for="user_password">Password:</label>
-        <input class="input" type="password" name="user_password" class="form-control">
-        <button type="submit" class="btn btn-primary">Sign In</button>
 
-    </div>
+<div class="container-fluid">
+    <h1>Sign In</h1>
+    <form action="{{url_for('sessions.create')}}" method="POST">
+        <div class="form-group">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <label for="user_email">Email:</label>
+            <input class="input" type="text" name="user_email" class="form-control">
+            <label for="user_password">Password:</label>
+            <input class="input" type="password" name="user_password" class="form-control">
+            <button type="submit" class="btn btn-primary">Sign In</button>
     
-</form>
-<p>______________ or _______________</p>
-<form action="{{url_for('sessions.google_login')}}">
-    <button type="submit" class="btn btn-secondary"> <img src="/static/google2.png" width="25" height="25" class="mr-2" > Sign in with Google</button>
-</form>
+        </div>
+        
+    </form>
+    <p>______________ or _______________</p>
+    <form action="{{url_for('sessions.google_login')}}">
+        <button type="submit" class="btn btn-secondary"> <img src="/static/google2.png" width="25" height="25" class="mr-2" > Sign in with Google</button>
+    </form>
+</div>
+
 
 
 {% endblock %}

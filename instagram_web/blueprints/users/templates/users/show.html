@@ -4,86 +4,90 @@
 {% endblock %}
 {% block title %}Sign In | Nextagram{% endblock %}
 {% block content %}
-
-<div class="container row mt-3 m-auto text-center pl-5 w-75">
-    <div class="col-sm-4 ml-5">
-        <img src="{{user.profile_image_url}}"  class="profile-picture rounded float-left w-100"/>
-    </div>
-    <div class="col-sm-6 mt-4">
-        <h4>Name: {{name}}</h4>
-        <h4>Username : {{user.username}}</h4>
-        <h4>Email : {{user.email}}</h4>
-        <br>
-        {% if current_user == user %}
-        <form action="{{url_for('images.new')}}">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-            
-            <button type="submit" class="btn btn-primary" style="width: 100%;">Create a Post</button>     
-        </form>
-        {% else %}
-            {% if current_user.follow_status(user) == None %}
-            <form action="{{url_for('users.user_follow',id = user.id)}}" method="POST">
+<div class="container-fluid">
+    <div class="container row mt-3 m-auto text-center pl-5 w-75">
+        <div class="col-sm-4 ml-5">
+            <img src="{{user.profile_image_url}}"  class="profile-picture rounded float-left w-100"/>
+        </div>
+        <div class="col-sm-6 mt-4">
+            <h4>Name: {{name}}</h4>
+            <h4>Username : {{user.username}}</h4>
+            <h4>Email : {{user.email}}</h4>
+            <br>
+            {% if current_user == user %}
+            <form action="{{url_for('images.new')}}">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                <button class="btn btn-outline-info">Follow</button>
-            </form>
-            {% elif current_user.follow_status(user) and not idol.is_approved %}
-            <form action="{{url_for('users.user_unfollow',id = user.id)}}" method="POST">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                <button class="btn btn-outline-info">Request Sent</button>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Create a Post</button>     
             </form>
             {% else %}
-            <form action="{{url_for('users.user_unfollow',id = user.id)}}" method="POST">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                <button class="btn btn-outline-info">Unfollow</button>
-            </form>
+                {% if current_user.follow_status(user) == None %}
+                <form action="{{url_for('users.user_follow',id = user.id)}}" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <button class="btn btn-outline-info">Follow</button>
+                </form>
+                {% elif current_user.follow_status(user) and not idol.is_approved %}
+                <form action="{{url_for('users.user_unfollow',id = user.id)}}" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <button class="btn btn-outline-info">Request Sent</button>
+                </form>
+                {% else %}
+                <form action="{{url_for('users.user_unfollow',id = user.id)}}" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <button class="btn btn-outline-info">Unfollow</button>
+                </form>
+                {% endif %}
             {% endif %}
+        </div>
+        {% if current_user == user %}
+        <div class="col-sm-1">
+            <form action="{{url_for('users.user_request')}}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <button type="submit" class="btn btn-primary mt-4">Follow Request</button>
+            </form>
+    
+        </div>
         {% endif %}
+            
     </div>
-    {% if current_user == user %}
-    <div class="col-sm-1">
-        <form action="{{url_for('users.user_request')}}">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-            <button type="submit" class="btn btn-primary mt-4">Follow Request</button>
-        </form>
-
-    </div>
-    {% endif %}
-        
+    
 </div>
 
-
-{% if not current_user == user %}
-<div class="row bg-light">
-    {% if not user.is_private %}
-    {% for image in images %}
-    <div class="col-sm-4 mt-5">
+<div class="container-fluid">
+    {% if not current_user == user %}
+    <div class="row bg-light">
+    {% if current_user.follow_status(user) and idol.is_approved %}
+        {% for image in images %}
+        <div class="col-sm-4 mt-5">
                 
-        <img src="{{image.new_image_url}}" class="picture img-fluid" alt="">
-        <form action="{{url_for('transactions.new_checkout', image_id = image.id)}}" class="form">
-            <button type="submit" class="btn btn-primary">Donate</button>
-        </form>
-        <p class="text-center donation mt-3">Total Donation : {{image.donations_sum}} </p>
+            <img src="{{image.new_image_url}}" class="picture img-fluid" alt="">
+            <form action="{{url_for('transactions.new_checkout', image_id = image.id)}}" class="form">
+                <button type="submit" class="btn btn-primary">Donate</button>
+            </form>
+            <p class="text-center donation mt-3">Total Donation : {{image.donations_sum}} </p>
         
-    </div>
-    {% endfor %}
+        </div>
+        {% endfor %}
             
 
-    {% else %}
-    <div class= "d-flex m-auto">
-        <img src="/static/lock.png" width="70" height="70" alt="">
-        <div>
-            <h3>This account is private</h3>
-            <p>Follow their account to see their photos and videos.</p>
-        </div>
+        {% elif user.is_private and not idol.is_approved %}
+        <div class= "d-flex m-auto">
+            <img src="/static/lock.png" width="70" height="70" alt="">
+            <div>
+                <h3>This account is private</h3>
+                <p>Follow their account to see their photos and videos.</p>
+            </div>
         
-    </div>
+        </div>
     
     {% endif %}
         
-</div>
+    </div>
         
     
-{% endif %}
+    {% endif %}
+</div>
+
 
 {% if current_user == user %}
 <div class="row bg-white">

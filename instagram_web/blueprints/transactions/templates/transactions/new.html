@@ -4,7 +4,8 @@
 {% endblock %}
 {% block title %}Payment | Nextagram{% endblock %}
 {% block content %}
-<form id="payment-form" action="{{url_for('transactions.create_checkout', image_id = image.id)}}" method="post">
+<div class="container-fluid">
+  <form id="payment-form" action="{{url_for('transactions.create_checkout', image_id = image.id)}}" method="post">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <section>
         <label for="amount">
@@ -20,7 +21,9 @@
     </section>
     <input type="submit" />
     <input type="hidden" id="nonce" name="payment_method_nonce"/>
-</form>
+  </form>
+
+</div>
 
 <script type="text/javascript">
     const form = document.getElementById('payment-form');
