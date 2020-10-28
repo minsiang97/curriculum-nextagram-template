@@ -41,12 +41,13 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
             </ul>
-  
+            {% if current_user.is_authenticated %}
             <form class="form-inline my-2 my-lg-0" action="{{url_for('users.search')}}" method="POST">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
               <input class="form-control mr-sm-2" type="text" name="username" placeholder="Type username">
               <input type="submit" class="btn btn-outline-info my-2 my-sm-0" value="Search">
             </form>
+            {% endif %}
             <a href="{{url_for('users.index')}}" class="ml-3">Users</a>
             
             {% if current_user.is_authenticated %}
