@@ -56,7 +56,7 @@
 <div class="container-fluid">
     {% if not current_user == user %}
     <div class="row bg-light">
-    {% if current_user.follow_status(user) and idol.is_approved %}
+    {% if current_user.follow_status(user) and idol.is_approved or not user.is_private %}
         {% for image in images %}
         <div class="col-sm-4 mt-5">
                 
