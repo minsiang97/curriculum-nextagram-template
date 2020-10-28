@@ -168,3 +168,7 @@ footer a {
   border: lightgray solid 1px;
 
 }
+
+.carousel-image {
+  height: auto;
+}
