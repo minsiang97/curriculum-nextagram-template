@@ -58,9 +58,10 @@ footer a {
 }
 
 .picture {
-  height: 300px;
-  width: 90%;
+  height: 270px;
+  width: 100%;
   margin-bottom: 50px;
+  object-fit: cover;
 }
 
 .profile-picture{
