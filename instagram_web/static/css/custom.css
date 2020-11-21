@@ -58,8 +58,9 @@ footer a {
 }
 
 .picture {
-  height: 400px;
-  width: 80%;
+  height: 300px;
+  width: 90%;
+  margin-bottom: 50px;
 }
 
 .profile-picture{
@@ -71,11 +72,11 @@ footer a {
 .form {
   text-align: center;
   margin-top: 10px;
-  width: 80%;
+  width: 100%;
 }
 
 .donation {
-  width: 80%;
+  width: 100%;
 }
 
 .profile-index-image{

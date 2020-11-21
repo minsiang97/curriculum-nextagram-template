@@ -18,12 +18,12 @@
     
 </div>
 
-<div class="text-center mt-5">
-   
-    <p>Proceed with another transaction</p>
-    <form action="{{url_for('transactions.new_checkout', image_id = image.id)}}">
-        <button type="submit" class="btn btn-primary">Back</button>
-    </form>
-    
-</div>
+
+<p class="text-center mt-5">If it did not auto redirect. <a href="{{url_for('home')}}">Click here</a></p>
+<script>
+    var timer = setTimeout(function() {
+            window.location='http://localhost:5000'
+        }, 5000);
+</script>
+
 {% endblock %}
