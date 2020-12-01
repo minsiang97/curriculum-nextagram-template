@@ -13,7 +13,7 @@
     
       
     <div class="container">
-      <div class="container-fluid right mt-3 p-0">
+      <div class="container-fluid right mt-3 p-0 idol-user">
         <div class="row">
           <div class="col-sm-2 p-0">
             <img src="{{current_user.profile_image_url}}" class="rounded-circle image-icon" width="70" height="70" alt="">
@@ -38,10 +38,10 @@
         </div>
       </div>
       <div class="row story-row">
-        <div class="col-sm-7 story">
+        <div class="col-lg-7 col-sm-12 story">
           <div class="row">
             {% for idol in current_user.idols %}
-            <div class="col-sm-2 text-center">
+            <div class="col-xs-2 text-center">
               <img src="{{idol.profile_image_url}}" class="rounded-circle image-icon mt-3" width="70" height="70" alt="">
               <p class="username-story"><a href="{{url_for('users.show', username = idol.username)}}" class="font-weight-bold">{{idol.username}}</a></p>
             </div>
@@ -55,7 +55,7 @@
       {% for image in current_user.image_feed %}
       <div class="row feed">
       
-        <div class="col-sm-7 border bg-white user-image">
+        <div class="col-lg-7 col-sm-12 border bg-white user-image">
           <div class="row pl-4 mt-3">
             <img src="{{image.user.profile_image_url}}" class="rounded-circle image-icon" width="50" height="50" alt="">
             <p class="mt-2 ml-3"><a href="{{url_for('users.show', username = image.user.username)}}" class="font-weight-bold">{{image.user.username}}</a></p>
@@ -84,10 +84,10 @@
       {% endif %}
     {% else %}
     <div class="row justify-content-center mt-4 w-100">
-      <div class="col-sm-1">
-        <img src="/static/favicon.png" class="w-75 ml-4"  alt="">
+      <div class="col-xs-1 pr-2 mb-5" >
+        <img src="/static/favicon.png" class="ml-4" width="80" height="80"  alt="">
       </div>
-      <div class="col-sm-2">
+      <div class="col-xs-2">
         <h3 class="mt-1">Nextagram</h3>
         <p class="slogan">Join us before it is too late.</p>
       </div>

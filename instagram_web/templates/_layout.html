@@ -48,18 +48,22 @@
               <input type="submit" class="btn btn-outline-info my-2 my-sm-0" value="Search">
             </form>
             {% endif %}
-            <a href="{{url_for('users.index')}}" class="ml-3">Users</a>
+            <ul class="navbar-nav">
+              <li><a href="{{url_for('users.index')}}" >Users</a></li>
+              {% if current_user.is_authenticated %}
+              <li><a href="{{url_for('users.show', username = current_user.username)}}" >Profile</a></li>
+              <li><a href="{{url_for('users.edit', id = current_user.id)}}" >Edit</a></li>
+              <form action="{{url_for('sessions.logout')}}" >
+                <button class="btn btn-danger" type="submit">Log Out</button>
+              </form>
+              {% elif not current_user.is_authenticated %}
+              <li><a href="{{url_for('sessions.new')}}">Sign In</a></li>
+              <li><a href="{{url_for('users.new')}}">Sign Up</a></li>
+              {% endif %}
+            </ul>
             
-            {% if current_user.is_authenticated %}
-            <a href="{{url_for('users.show', username = current_user.username)}}" class="ml-4">Profile</a>
-            <a href="{{url_for('users.edit', id = current_user.id)}}" class="ml-4">Edit</a>
-            <form action="{{url_for('sessions.logout')}}" class="ml-4">
-              <button class="btn btn-danger" type="submit">Log Out</button>
-            </form>
-            {% elif not current_user.is_authenticated %}
-            <a href="{{url_for('sessions.new')}}" class="ml-4">Sign In</a>
-            <a href="{{url_for('users.new')}}" class="ml-4">Sign Up</a>
-            {% endif %}
+            
+            
             
           </div>
         </nav>
